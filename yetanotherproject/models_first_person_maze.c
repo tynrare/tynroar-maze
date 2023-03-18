@@ -37,7 +37,7 @@ int main(void)
 
 	// Define the camera to look into our 3d world
 	Camera3D camera = { 0 };
-	camera.position = (Vector3){ 0.0f, 1.6f, 0.0f }; // Camera position
+	camera.position = (Vector3){ 0.0f, 0.6f, 0.0f }; // Camera position
 	camera.target = (Vector3){ 0.0f, 0.5f, 1.0f };      // Camera looking at point
 	camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
 	camera.fovy = 90.0f;                                // Camera field-of-view Y
