@@ -1,0 +1,1 @@
+/usr/bin/cc -rdynamic CMakeFiles/empty.dir/empty.c.o CMakeFiles/empty.dir/__/deps/tinycthread.c.o CMakeFiles/empty.dir/__/deps/glad.c.o -o empty  -Wl,-rpath,/home/w/dust-0/d230317-raylib/yetanotherproject/build/glfw-3.2.1/src ../src/libglfw.so.3.2 -lm -Wl,-Bstatic -lrt -Wl,-Bdynamic 

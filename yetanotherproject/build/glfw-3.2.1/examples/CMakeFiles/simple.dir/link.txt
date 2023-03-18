@@ -1,0 +1,1 @@
+/usr/bin/cc -rdynamic CMakeFiles/simple.dir/simple.c.o CMakeFiles/simple.dir/__/deps/glad.c.o -o simple  -Wl,-rpath,/home/w/dust-0/d230317-raylib/yetanotherproject/build/glfw-3.2.1/src ../src/libglfw.so.3.2 -lm 

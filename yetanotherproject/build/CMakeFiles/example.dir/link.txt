@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/example.dir/models_first_person_maze.c.o -o example  /usr/lib/libraylib.so -lm -L/usr/lib -lraylib 

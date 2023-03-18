@@ -1,0 +1,1 @@
+/usr/bin/cc -rdynamic CMakeFiles/title.dir/title.c.o CMakeFiles/title.dir/__/deps/glad.c.o -o title  -Wl,-rpath,/home/w/dust-0/d230317-raylib/yetanotherproject/build/glfw-3.2.1/src ../src/libglfw.so.3.2 -lm 
