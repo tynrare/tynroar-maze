@@ -15,16 +15,27 @@
 
 #include <stdlib.h>           // Required for: free()
 #include <stdio.h>
-			      
+
 #define RLIGHTS_IMPLEMENTATION
 #include "src/rlights.h"
-			      
+
 
 #if defined(PLATFORM_DESKTOP)
-    #define GLSL_VERSION            330
+#define GLSL_VERSION            330
 #else   // PLATFORM_RPI, PLATFORM_ANDROID, PLATFORM_WEB
-    #define GLSL_VERSION            100
+#define GLSL_VERSION            100
 #endif
+
+float lerp(float a, float b, float t) {
+	return a + (b - a) * t;
+}
+
+float rlerp (float a, float b, float t){
+    float CS = (1.0f - t) * cosf(a) + t * cosf(b);
+    float SN = (1.0f - t) * sinf(a) + t * sinf(b);
+
+    return atan2f(SN, CS);
+}
 
 int main(void)
 {
@@ -56,10 +67,14 @@ int main(void)
 	Color *mapPixels = LoadImageColors(imMap);
 	UnloadImage(imMap);             // Unload image from RAM
 
+	// ---
+	// game data
 	Vector3 mapPosition = { -0.0f, 0.0f, -0.0f };  // Set model position
 	Vector2 inputDirection = { 0.0f, 0.0f };						
 	Vector2 playerPosition = { 1.0f, 1.0f };
 	float playerTurn = 0.0f;
+	float cameraRot = 0.0f;
+	int steps = 0;
 
 	//SetCameraMode(camera, CAMERA_FIRST_PERSON);     // Set camera mode
 
@@ -79,7 +94,7 @@ int main(void)
 	//model.materials[0].shader = shader;
 
 	//Light light = CreateLight(LIGHT_POINT, (Vector3){ 0, 2, 6 }, Vector3Zero(), WHITE, shader);
-										     //
+	//
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 					//--------------------------------------------------------------------------------------
 
@@ -122,6 +137,10 @@ int main(void)
 			inputonce = true;
 		}
 
+		if ( inputDirection.x ) {
+			steps += 1;
+		}
+
 
 		// rotate
 		playerTurn += PI / 2.0f * inputDirection.y;
@@ -129,20 +148,24 @@ int main(void)
 		// move
 		float newx = roundf(playerPosition.x + sinf(playerTurn) * inputDirection.x);
 		float newy = roundf(playerPosition.y + cosf(playerTurn) * inputDirection.x);
-		 int collider = mapPixels[(int)(newy)*cubicmap.width + (int)(newx)].r;
-		 if(inputDirection.x != 0.0f) {
-		printf("newx: %f, newy: %f, turn: %f \n", newx, newy, playerTurn);
-		 }
+		int collider = mapPixels[(int)(newy)*cubicmap.width + (int)(newx)].r;
+		/*
+		if(inputDirection.x != 0.0f) {
+			printf("newx: %f, newy: %f, turn: %f \n", newx, newy, playerTurn);
+		}
+		*/
 		if (collider == 0) {
 			playerPosition.x = newx;
 			playerPosition.y = newy;
 		}
 
-		camera.position.x = playerPosition.x;
-		camera.position.z = playerPosition.y;
-		camera.target.x = camera.position.x + sinf(playerTurn);
+		cameraRot = rlerp(cameraRot, playerTurn, 0.5);
+
+		camera.position.x = lerp(camera.position.x, playerPosition.x, 0.5);
+		camera.position.z = lerp(camera.position.z, playerPosition.y, 0.5);
+		camera.target.x = camera.position.x + sinf(cameraRot);
 		camera.target.y = camera.position.y;
-		camera.target.z = camera.position.z + cosf(playerTurn);
+		camera.target.z = camera.position.z + cosf(cameraRot);
 
 		//light.position = camera.position;
 
@@ -165,6 +188,7 @@ int main(void)
 		//DrawRectangle(GetScreenWidth() - cubicmap.width*4 - 20 + playerCellX*4, 20 + playerCellY*4, 4, 4, RED);
 
 		DrawFPS(10, 10);
+		DrawText(TextFormat("Steps: %i", steps), 10, 50, 10, BLACK);
 
 		EndDrawing();
 		//----------------------------------------------------------------------------------
