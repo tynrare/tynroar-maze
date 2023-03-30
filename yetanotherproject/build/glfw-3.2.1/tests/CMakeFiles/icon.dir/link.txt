@@ -1,1 +1,0 @@
-/usr/bin/cc -rdynamic CMakeFiles/icon.dir/icon.c.o CMakeFiles/icon.dir/__/deps/glad.c.o -o icon  -Wl,-rpath,/home/w/dust-0/d230317-raylib/yetanotherproject/build/glfw-3.2.1/src ../src/libglfw.so.3.2 -lm 

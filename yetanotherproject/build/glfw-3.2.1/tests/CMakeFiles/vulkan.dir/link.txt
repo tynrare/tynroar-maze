@@ -1,1 +1,0 @@
-/usr/bin/cc -rdynamic CMakeFiles/vulkan.dir/vulkan.c.o -o vulkan  -Wl,-rpath,/home/w/dust-0/d230317-raylib/yetanotherproject/build/glfw-3.2.1/src ../src/libglfw.so.3.2 -lm -lvulkan 

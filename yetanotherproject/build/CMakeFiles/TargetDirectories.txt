@@ -1,3 +1,0 @@
-/home/w/dust-0/d230317-raylib/yetanotherproject/build/CMakeFiles/example.dir
-/home/w/dust-0/d230317-raylib/yetanotherproject/build/CMakeFiles/edit_cache.dir
-/home/w/dust-0/d230317-raylib/yetanotherproject/build/CMakeFiles/rebuild_cache.dir

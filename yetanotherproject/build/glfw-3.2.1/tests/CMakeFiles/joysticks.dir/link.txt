@@ -1,1 +1,0 @@
-/usr/bin/cc -rdynamic CMakeFiles/joysticks.dir/joysticks.c.o CMakeFiles/joysticks.dir/__/deps/glad.c.o -o joysticks  -Wl,-rpath,/home/w/dust-0/d230317-raylib/yetanotherproject/build/glfw-3.2.1/src ../src/libglfw.so.3.2 -lm 
