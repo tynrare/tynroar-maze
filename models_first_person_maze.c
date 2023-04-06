@@ -105,7 +105,7 @@ int main(void)
 	{
 		// Update
 		//----------------------------------------------------------------------------------
-		UpdateCamera(&camera);      // Update camera
+		//UpdateCamera(&camera, 0);      // Update camera
 
 		// Check player collision (we simplify to 2D collision detection)
 
