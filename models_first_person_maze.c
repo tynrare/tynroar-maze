@@ -175,7 +175,7 @@ int main(void)
 		//----------------------------------------------------------------------------------
 		BeginDrawing();
 
-		ClearBackground(RAYWHITE);
+		ClearBackground(BLANK);
 
 		BeginMode3D(camera);
 		DrawModel(model, mapPosition, 1.0f, WHITE);                     // Draw maze map
