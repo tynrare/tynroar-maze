@@ -239,10 +239,13 @@ int main(void) {
     // ---- navigation_system >>
     //
     for (int i = 0; i < min(tagsCount, tagsLimit); i++) {
-			DrawCube((Vector3){(float)(tagPositions[i][0]), 0.5f, (float)(tagPositions[i][1])}, 0.5f, 0.5f, 0.5f, RED);
-      DrawText(TextFormat("#%i: %ix%i", i + tagsCount, tagPositions[i][0],
-                          tagPositions[i][1]),
-               10, 80 + i * 14, 12, BLACK);
+        DrawCube((Vector3){(float)(tagPositions[i][0]), 0.5f, (float)(tagPositions[i][1])}, 0.5f, 0.5f, 0.5f, RED);
+        DrawText(
+                TextFormat(
+                    "#%i: %ix%i", i + tagsCount, tagPositions[i][0],
+                    tagPositions[i][1]
+                ), 
+                10, 80 + i * 14, 12, BLACK);
     }
     //
     // ---- navigation_system <<
