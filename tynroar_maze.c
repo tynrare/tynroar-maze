@@ -30,31 +30,36 @@ int min(int a, int b) { return a > b ? b : a; }
 
 float lerp(float a, float b, float t) { return a + (b - a) * t; }
 
-float rlerp(float a, float b, float t) {
+float rlerp(float a, float b, float t)
+{
   float CS = (1.0f - t) * cosf(a) + t * cosf(b);
   float SN = (1.0f - t) * sinf(a) + t * sinf(b);
 
   return atan2f(SN, CS);
 }
 
-bool isAnyKeyPressed(int count, ...) {
-	bool pressed = false;
+bool isAnyKeyPressed(int count, ...)
+{
+  bool pressed = false;
 
-	va_list args;
-	va_start(args, count);
+  va_list args;
+  va_start(args, count);
 
-	for (int i = 0; i < count; i++) {
-		if ( IsKeyDown (va_arg(args, int)) ) {
-			pressed = true;
-		}
-	}
+  for (int i = 0; i < count; i++)
+  {
+    if (IsKeyDown(va_arg(args, int)))
+    {
+      pressed = true;
+    }
+  }
 
-	va_end(args);
+  va_end(args);
 
-	return pressed;
+  return pressed;
 }
 
-int main(void) {
+int main(void)
+{
   // Initialization
   //--------------------------------------------------------------------------------------
   const int screenWidth = 800;
@@ -114,13 +119,14 @@ int main(void) {
   float fogDensity = 0.0f;
   int fogDensityLoc = GetShaderLocation(shader, "fogDensity");
   SetShaderValue(shader, fogDensityLoc, &fogDensity, SHADER_UNIFORM_FLOAT);
+
+
+  model.materials[0].shader = shader;
+
+  Light light = CreateLight(LIGHT_POINT, (Vector3){ 0, 2, 6 }, Vector3Zero(),
+  WHITE, shader);
   */
 
-  // model.materials[0].shader = shader;
-
-  // Light light = CreateLight(LIGHT_POINT, (Vector3){ 0, 2, 6 }, Vector3Zero(),
-  // WHITE, shader);
-  //
   SetTargetFPS(
       60); // Set our game to run at 60 frames-per-second
            //--------------------------------------------------------------------------------------
@@ -152,36 +158,51 @@ int main(void) {
     inputDirection.y = 0.0f;
     bool inputed = false;
 
-		if ( isAnyKeyPressed (5, KEY_W, KEY_S, KEY_A, KEY_D, KEY_E) ) {
-			inputed = true;
-		} else {
-			inputonce = true;
-		}
+    if (isAnyKeyPressed(5, KEY_W, KEY_S, KEY_A, KEY_D, KEY_E))
+    {
+      inputed = true;
+    }
+    else
+    {
+      inputonce = true;
+    }
 
     // Задаем направление по нажатию кнопки
-		if (inputonce) {
-      if (IsKeyDown(KEY_W)) {
+    if (inputonce)
+    {
+      if (IsKeyDown(KEY_W))
+      {
         inputDirection.x = 1.0f;
-      } else if (IsKeyDown(KEY_S)) {
+      }
+      else if (IsKeyDown(KEY_S))
+      {
         inputDirection.x = -1.0f;
-      } else if (IsKeyDown(KEY_A)) {
+      }
+      else if (IsKeyDown(KEY_A))
+      {
         inputDirection.y = 1.0f;
-      } else if (IsKeyDown(KEY_D)) {
+      }
+      else if (IsKeyDown(KEY_D))
+      {
         inputDirection.y = -1.0f;
-      } else if (IsKeyDown(KEY_E)) {
+      }
+      else if (IsKeyDown(KEY_E))
+      {
         size_t length = sizeof(tagPositions) / sizeof(int);
         int index = tagIndex++ % tagsLimit;
         tagPositions[index][0] = (int)(playerPosition.x);
         tagPositions[index][1] = (int)(playerPosition.y);
         tagsCount += 1;
       }
-		}
+    }
 
-		if (inputed) {
-			inputonce = false;
-		}
+    if (inputed)
+    {
+      inputonce = false;
+    }
 
-    if (inputDirection.x) {
+    if (inputDirection.x)
+    {
       steps += 1;
     }
 
@@ -197,7 +218,8 @@ int main(void) {
             printf("newx: %f, newy: %f, turn: %f \n", newx, newy, playerTurn);
     }
     */
-    if (collider == 0) {
+    if (collider == 0)
+    {
       playerPosition.x = newx;
       playerPosition.y = newy;
     }
@@ -238,14 +260,14 @@ int main(void) {
 
     // ---- navigation_system >>
     //
-    for (int i = 0; i < min(tagsCount, tagsLimit); i++) {
-        DrawCube((Vector3){(float)(tagPositions[i][0]), 0.5f, (float)(tagPositions[i][1])}, 0.5f, 0.5f, 0.5f, RED);
-        DrawText(
-                TextFormat(
-                    "#%i: %ix%i", i + tagsCount, tagPositions[i][0],
-                    tagPositions[i][1]
-                ), 
-                10, 80 + i * 14, 12, BLACK);
+    for (int i = 0; i < min(tagsCount, tagsLimit); i++)
+    {
+      DrawCube((Vector3){(float)(tagPositions[i][0]), 0.5f, (float)(tagPositions[i][1])}, 0.5f, 0.5f, 0.5f, RED);
+      DrawText(
+          TextFormat(
+              "#%i: %ix%i", i + tagsCount, tagPositions[i][0],
+              tagPositions[i][1]),
+          10, 80 + i * 14, 12, BLACK);
     }
     //
     // ---- navigation_system <<
