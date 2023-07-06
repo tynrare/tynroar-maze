@@ -210,18 +210,24 @@ int main(void)
     playerTurn += PI / 2.0f * inputDirection.y;
 
     // move
-    float newx = roundf(playerPosition.x + sinf(playerTurn) * inputDirection.x);
-    float newy = roundf(playerPosition.y + cosf(playerTurn) * inputDirection.x);
-    int collider = mapPixels[(int)(newy)*cubicmap.width + (int)(newx)].r;
-    /*
-    if(inputDirection.x != 0.0f) {
-            printf("newx: %f, newy: %f, turn: %f \n", newx, newy, playerTurn);
-    }
-    */
-    if (collider == 0)
-    {
-      playerPosition.x = newx;
-      playerPosition.y = newy;
+    int collider = 0;
+    while (!collider && inputDirection.x) {
+        float newx = roundf(playerPosition.x + sinf(playerTurn) * inputDirection.x);
+        float newy = roundf(playerPosition.y + cosf(playerTurn) * inputDirection.x);
+        collider = mapPixels[(int)(newy)*cubicmap.width + (int)(newx)].r;
+        /*
+        if(inputDirection.x != 0.0f) {
+                printf("newx: %f, newy: %f, turn: %f \n", newx, newy, playerTurn);
+        }
+        */
+        if (collider == 0)
+        {
+          playerPosition.x = newx;
+          playerPosition.y = newy;
+        }
+        if (IsKeyDown(KEY_LEFT_SHIFT)) {
+            break;
+        }
     }
 
     cameraRot = rlerp(cameraRot, playerTurn, 0.5);
